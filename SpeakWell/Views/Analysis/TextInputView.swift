@@ -55,13 +55,17 @@ struct TextInputView: View {
                 
                 // Recording Button
                 Button(action: {
-                    if recordingService.isRecording {
-                        recordingService.stopRecording()
-                        // Here you would make the API call with recordingService.recordedText
-                        // and show the analysis results
-                        showingAnalysisResults = true
-                    } else {
-                        recordingService.startRecording()
+                    Task {
+                        if recordingService.isRecording {
+                            await recordingService.stopRecording()
+                            await MainActor.run {
+                                showingAnalysisResults = true
+                            }
+                        } else {
+                            await MainActor.run {
+                                recordingService.startRecording()
+                            }
+                        }
                     }
                 }) {
                     HStack {
@@ -89,26 +93,31 @@ struct TextInputView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        viewModel.stopSpeech()
-                        recordingService.stopRecording()
-                        dismiss()
+                        Task {
+                            if recordingService.isRecording {
+                                await recordingService.stopRecording()
+                            }
+                            viewModel.stopSpeech()
+                            dismiss()
+                        }
                     }
                     .foregroundColor(.appText)
                 }
             }
+            .onDisappear {
+                Task {
+                    if recordingService.isRecording {
+                        await recordingService.stopRecording()
+                    }
+                }
+            }
             .background(Color.appBackground)
             .sheet(isPresented: $showingAnalysisResults) {
-                // This is a placeholder - you would replace these values with actual API response
-                AnalysisResultsView(
-                    scores: PronunciationScore(
-                        accuracy: 0.85,
-                        fluency: 0.78,
-                        completeness: 0.92,
-                        overall: 0.85
-                    ),
-                    feedback: "Good pronunciation overall. Pay attention to the rhythm and stress patterns.",
-                    recordedText: recordingService.recordedText
-                )
+                if let result = recordingService.assessmentResult {
+                    NavigationView {
+                        AnalysisResultsView(result: result)
+                    }
+                }
             }
         }
     }

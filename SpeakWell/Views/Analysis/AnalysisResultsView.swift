@@ -1,79 +1,94 @@
 import SwiftUI
 
 struct AnalysisResultsView: View {
-    let scores: PronunciationScore
-    let feedback: String
-    let recordedText: String
+    let result: PronunciationAssessmentResult
+    
+    private var firstResult: NBestResult {
+        result.nbest?.first ?? NBestResult(
+            confidence: 0,
+            lexical: "",
+            itn: nil,
+            maskedITN: nil,
+            display: nil,
+            accuracyScore: 0,
+            fluencyScore: 0,
+            completenessScore: 0,
+            pronScore: 0,
+            words: []
+        )
+    }
     
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                Text("Pronunciation Analysis")
-                    .font(.title)
-                    .foregroundColor(.appText)
+                RecordedSpeechView(
+                    displayText: result.displayText,
+                    snr: result.snr
+                )
                 
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Your Speech")
-                        .font(.headline)
-                        .foregroundColor(.appText)
-                    
-                    Text(recordedText)
-                        .foregroundColor(.appText)
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.appInteractive.opacity(0.2))
-                        .cornerRadius(8)
+                OverallScoreView(score: firstResult.pronScore)
+                
+                DetailedScoresView(
+                    accuracyScore: firstResult.accuracyScore,
+                    fluencyScore: firstResult.fluencyScore,
+                    completenessScore: firstResult.completenessScore
+                )
+                
+                if let words = firstResult.words {
+                    WordAnalysisView(words: words)
                 }
-                .padding(.horizontal)
-                
-                ScoreCard(title: "Overall Score", score: scores.overall)
-                
-                VStack(spacing: 15) {
-                    ScoreCard(title: "Accuracy", score: scores.accuracy)
-                    ScoreCard(title: "Fluency", score: scores.fluency)
-                    ScoreCard(title: "Completeness", score: scores.completeness)
-                }
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Feedback")
-                        .font(.headline)
-                        .foregroundColor(.appText)
-                    
-                    Text(feedback)
-                        .foregroundColor(.appText.opacity(0.8))
-                        .padding()
-                        .background(Color.appInteractive.opacity(0.2))
-                        .cornerRadius(10)
-                }
-                .padding()
             }
             .padding()
         }
-        .background(Color.appBackground)
+        .background(Color(.systemGroupedBackground))
+        .navigationTitle("Pronunciation Analysis")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            print("📊 AnalysisResultsView appeared")
+            print("Recognition Status: \(result.recognitionStatus)")
+            print("Display Text: \(result.displayText)")
+            print("SNR: \(result.snr) dB")
+            print("NBest count: \(result.nbest?.count ?? 0)")
+            print("First result confidence: \(firstResult.confidence)")
+            print("First result pronScore: \(firstResult.pronScore)")
+            print("Words count: \(firstResult.words?.count ?? 0)")
+        }
     }
 }
 
-struct ScoreCard: View {
-    let title: String
-    let score: Double
-    
-    var body: some View {
-        HStack {
-            Text(title)
-                .foregroundColor(.appText)
-            Spacer()
-            Text("\(Int(score * 100))%")
-                .foregroundColor(scoreColor)
-                .bold()
-        }
-        .padding()
-        .background(Color.appInteractive.opacity(0.2))
-        .cornerRadius(10)
-    }
-    
-    private var scoreColor: Color {
-        if score >= 0.8 { return .appHighlight }
-        if score >= 0.6 { return .appText }
-        return .appError
+#Preview {
+    NavigationView {
+        AnalysisResultsView(
+            result: PronunciationAssessmentResult(
+                recognitionStatus: "Success",
+                offset: 33700000,
+                duration: 12200000,
+                displayText: "Hello.",
+                snr: 14.755138,
+                nbest: [
+                    NBestResult(
+                        confidence: 0.9245627,
+                        lexical: "hello",
+                        itn: nil,
+                        maskedITN: nil,
+                        display: "Hello.",
+                        accuracyScore: 57.0,
+                        fluencyScore: 0.0,
+                        completenessScore: 0.0,
+                        pronScore: 11.4,
+                        words: [
+                            WordAssessment(
+                                word: "Hello",
+                                offset: 33700000,
+                                duration: 12200000,
+                                confidence: 0.0,
+                                accuracyScore: 57.0,
+                                errorType: "Mispronunciation"
+                            )
+                        ]
+                    )
+                ]
+            )
+        )
     }
 } 
