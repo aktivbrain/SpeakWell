@@ -40,9 +40,10 @@ struct AnalysisResultsView: View {
             }
             .padding()
         }
-        .background(Color(.systemGroupedBackground))
+        .background(Color.appBackground)
         .navigationTitle("Pronunciation Analysis")
         .navigationBarTitleDisplayMode(.inline)
+        .foregroundColor(.appText)
         .onAppear {
             print("📊 AnalysisResultsView appeared")
             print("Recognition Status: \(result.recognitionStatus)")

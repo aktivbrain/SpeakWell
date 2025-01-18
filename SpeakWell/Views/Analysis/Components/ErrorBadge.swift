@@ -10,7 +10,7 @@ struct ErrorBadge: View {
                 .foregroundColor(.white)
                 .padding(.horizontal, 8)
                 .padding(.vertical, 4)
-                .background(Color.red)
+                .background(Color.appError)
                 .cornerRadius(8)
         }
     }

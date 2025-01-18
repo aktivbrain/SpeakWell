@@ -7,16 +7,17 @@ struct OverallScoreView: View {
         VStack(spacing: 16) {
             Text("Overall Score")
                 .font(.headline)
+                .foregroundColor(AppColors.primary)
             
             ZStack {
                 Circle()
-                    .stroke(Color(.systemGray5), lineWidth: 20)
+                    .stroke(AppColors.primary.opacity(0.1), lineWidth: 20)
                     .frame(width: 150, height: 150)
                 
                 Circle()
                     .trim(from: 0, to: score / 100)
                     .stroke(
-                        Color.accentColor,
+                        score >= 70 ? AppColors.primary : AppColors.accent,
                         style: StrokeStyle(lineWidth: 20, lineCap: .round)
                     )
                     .frame(width: 150, height: 150)
@@ -24,20 +25,22 @@ struct OverallScoreView: View {
                 
                 Text("\(Int(score))")
                     .font(.system(size: 44, weight: .bold, design: .rounded))
+                    .foregroundColor(AppColors.primary)
             }
             
             Text("Based on accuracy, fluency, and completeness")
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(AppColors.primary.opacity(0.7))
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(Color.white)
         .cornerRadius(16)
+        .shadow(color: AppColors.primary.opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }
 
-#Preview {
+#Preview("Overall Score") {
     OverallScoreView(score: 85.5)
         .padding()
-        .background(Color(.systemGroupedBackground))
+        .background(AppColors.background)
 } 

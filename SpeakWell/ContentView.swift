@@ -19,7 +19,7 @@ struct ContentView: View {
                 }
                 .tag(0)
             
-            AnalysisView()  // Remove the Analysis. prefix
+            AnalysisView()
                 .tabItem {
                     Image(systemName: "waveform")
                     Text("Analysis")
@@ -40,12 +40,11 @@ struct ContentView: View {
                 }
                 .tag(3)
         }
-        .tint(Color("AccentColor"))
-        .preferredColorScheme(.dark)
-        .background(Color.appBackground)
+        .tint(AppColors.accent)
+        .background(AppColors.background)
     }
 }
 
-#Preview {
+#Preview("Main App") {
     ContentView()
 }

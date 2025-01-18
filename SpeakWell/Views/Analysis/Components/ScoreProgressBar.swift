@@ -11,10 +11,10 @@ struct ScoreProgressBar: View {
     
     private func getScoreColor(_ score: Double) -> Color {
         switch score {
-        case 90...100: return .green
-        case 70..<90: return .blue
-        case 50..<70: return .orange
-        default: return .red
+        case 90...100: return AppColors.primary
+        case 70..<90: return AppColors.primary.opacity(0.8)
+        case 50..<70: return AppColors.accent
+        default: return AppColors.accent.opacity(0.8)
         }
     }
     
@@ -24,7 +24,7 @@ struct ScoreProgressBar: View {
                 Rectangle()
                     .frame(width: geometry.size.width, height: height)
                     .opacity(0.1)
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(AppColors.primary)
                 
                 Rectangle()
                     .frame(width: geometry.size.width * score / 100, height: height)
@@ -35,7 +35,7 @@ struct ScoreProgressBar: View {
     }
 }
 
-#Preview {
+#Preview("Score Progress") {
     VStack(spacing: 20) {
         ScoreProgressBar(score: 95)
             .frame(height: 8)
@@ -45,4 +45,5 @@ struct ScoreProgressBar: View {
             .frame(height: 8)
     }
     .padding()
+    .background(AppColors.background)
 } 

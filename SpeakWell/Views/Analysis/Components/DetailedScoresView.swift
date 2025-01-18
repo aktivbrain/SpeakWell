@@ -24,11 +24,12 @@ struct DetailedScoresView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Detailed Scores")
                 .font(.headline)
+                .foregroundColor(AppColors.primary)
             
             ForEach(scores) { score in
                 HStack {
                     Label(score.title, systemImage: score.icon)
-                        .foregroundColor(.primary)
+                        .foregroundColor(AppColors.primary)
                     
                     Spacer()
                     
@@ -37,23 +38,24 @@ struct DetailedScoresView: View {
                     
                     Text("\(Int(score.score))")
                         .font(.callout.monospacedDigit())
-                        .foregroundColor(.secondary)
+                        .foregroundColor(AppColors.primary.opacity(0.7))
                         .frame(width: 30, alignment: .trailing)
                 }
             }
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(Color.white)
         .cornerRadius(16)
+        .shadow(color: AppColors.primary.opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }
 
-#Preview {
+#Preview("Detailed Scores") {
     DetailedScoresView(
         accuracyScore: 85.0,
         fluencyScore: 92.5,
         completenessScore: 75.0
     )
     .padding()
-    .background(Color(.systemGroupedBackground))
+    .background(AppColors.background)
 } 

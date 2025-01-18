@@ -7,12 +7,14 @@ struct WordAnalysisView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Word Analysis")
                 .font(.headline)
+                .foregroundColor(AppColors.primary)
             
             ForEach(words, id: \.word) { word in
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Text(word.word)
                             .font(.body.bold())
+                            .foregroundColor(AppColors.primary)
                         
                         Spacer()
                         
@@ -25,27 +27,28 @@ struct WordAnalysisView: View {
                     HStack {
                         Text("Accuracy: \(Int(word.accuracyScore))%")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(AppColors.primary.opacity(0.7))
                         
                         Spacer()
                         
                         Text("\(String(format: "%.1f", Double(word.duration) / 1_000_000))s")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(AppColors.primary.opacity(0.7))
                     }
                 }
                 .padding()
-                .background(Color(.secondarySystemGroupedBackground))
+                .background(Color.white)
                 .cornerRadius(12)
             }
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(Color.white)
         .cornerRadius(16)
+        .shadow(color: AppColors.primary.opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }
 
-#Preview {
+#Preview("Word Analysis") {
     WordAnalysisView(words: [
         WordAssessment(
             word: "Hello",
@@ -65,5 +68,5 @@ struct WordAnalysisView: View {
         )
     ])
     .padding()
-    .background(Color(.systemGroupedBackground))
+    .background(AppColors.background)
 } 

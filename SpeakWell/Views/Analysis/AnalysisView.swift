@@ -5,45 +5,55 @@ struct AnalysisView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 30) {
-                Text("AI Speech Analysis")
-                    .font(.largeTitle)
-                    .foregroundColor(.appText)
-                    .padding()
+            ZStack {
+                AppColors.background.ignoresSafeArea()
                 
-                Circle()
-                    .stroke(Color.appInteractive, lineWidth: 4)
-                    .frame(width: 200, height: 200)
-                    .overlay(
-                        Image(systemName: "waveform")
-                            .font(.system(size: 70))
-                            .foregroundColor(.appInteractive)
-                    )
-                
-                Text("Tap to start recording")
-                    .foregroundColor(.appText.opacity(0.8))
-                    .padding()
-                
-                Button(action: {
-                    showingTextInput = true
-                }) {
-                    HStack {
-                        Image(systemName: "text.bubble.fill")
-                        Text("Text to Speech")
+                VStack(spacing: 30) {
+                    Spacer()
+                    
+                    // App Logo
+                    Image("AppLogo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 200)
+                    
+                    // Record button
+                    Button(action: {
+                        showingTextInput = true
+                    }) {
+                        ZStack {
+                            Circle()
+                                .stroke(AppColors.accent, lineWidth: 2)
+                                .frame(width: 80, height: 80)
+                            
+                            Image(systemName: "mic.fill")
+                                .font(.system(size: 30))
+                                .foregroundColor(AppColors.accent)
+                        }
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.appInteractive)
-                    .foregroundColor(.appText)
-                    .cornerRadius(10)
+                    
+                    Text("Tap to start recording")
+                        .font(.system(size: 16, weight: .medium, design: .rounded))
+                        .foregroundColor(AppColors.primary.opacity(0.8))
+                    
+                    Spacer()
                 }
-                .padding(.horizontal)
             }
             .navigationBarTitleDisplayMode(.inline)
-            .background(Color.appBackground)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Text("AI Speech Analysis")
+                        .font(.title.bold())
+                        .foregroundColor(AppColors.primary)
+                }
+            }
             .sheet(isPresented: $showingTextInput) {
                 TextInputView()
             }
         }
     }
+}
+
+#Preview("Analysis") {
+    AnalysisView()
 } 

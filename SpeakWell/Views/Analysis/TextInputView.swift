@@ -121,4 +121,8 @@ struct TextInputView: View {
             }
         }
     }
+}
+
+#Preview("TextInput") {
+    TextInputView()
 } 

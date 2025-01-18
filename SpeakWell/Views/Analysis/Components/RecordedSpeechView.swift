@@ -8,33 +8,37 @@ struct RecordedSpeechView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Your Speech")
                 .font(.headline)
+                .foregroundColor(AppColors.primary)
             
             Text(displayText)
                 .font(.body)
+                .foregroundColor(AppColors.primary)
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color(.secondarySystemGroupedBackground))
+                .background(AppColors.background)
                 .cornerRadius(10)
             
             HStack {
                 Label("Audio Quality", systemImage: "waveform")
+                    .foregroundColor(AppColors.primary.opacity(0.7))
                 Spacer()
                 Text("\(Int(snr))dB")
+                    .foregroundColor(AppColors.primary.opacity(0.7))
             }
             .font(.subheadline)
-            .foregroundColor(.secondary)
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(Color.white)
         .cornerRadius(16)
+        .shadow(color: AppColors.primary.opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }
 
-#Preview {
+#Preview("Recorded Speech") {
     RecordedSpeechView(
         displayText: "Hello, how are you?",
         snr: 35.5
     )
     .padding()
-    .background(Color(.systemGroupedBackground))
+    .background(AppColors.background)
 } 
