@@ -9,6 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.voxpro.app'),
   title: 'VoxPro - AI-Powered Pronunciation Coach',
   description: 'Master your English pronunciation with VoxPro, your AI-powered coach providing real-time feedback and personalized practice.',
   keywords: ['pronunciation', 'English learning', 'AI coach', 'speech analysis', 'language learning'],
