@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import { GA_MEASUREMENT_ID } from './utils/analytics';
 import './globals.css';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -48,6 +49,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
