@@ -33,65 +33,32 @@ async function writeWaitlist(emails: string[]) {
 
 // Send welcome email
 async function sendWelcomeEmail(email: string) {
-  try {
-    console.log('Attempting to send welcome email...');
-    console.log('Using API Key:', process.env.RESEND_API_KEY ? 'Present' : 'Missing');
-    
-    const data = await resend.emails.send({
-      from: 'VoxPro <notifications@send.voxpro.app>',
-      to: email,
-      subject: 'Welcome to the VoxPro Waitlist! 🎉',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #1B365D;">Welcome to VoxPro! 🎉</h2>
-          <p>Thank you for joining our waitlist! We're thrilled to have you on board.</p>
-          <p>You'll be among the first to know when VoxPro launches, and you'll get:</p>
-          <ul>
-            <li>Early access to the app</li>
-            <li>Exclusive updates about our progress</li>
-            <li>Special launch offers</li>
-          </ul>
-          <p>In the meantime, follow us on social media for the latest updates:</p>
-          <div style="margin-top: 20px;">
-            <a href="https://twitter.com/voxproapp" style="color: #1DA1F2; text-decoration: none; margin-right: 20px;">Twitter</a>
-            <a href="https://linkedin.com/company/voxpro" style="color: #0A66C2; text-decoration: none;">LinkedIn</a>
-          </div>
-          <p style="margin-top: 30px; font-size: 12px; color: #666;">
-            You're receiving this email because you joined the VoxPro waitlist. 
-            If you didn't sign up, please ignore this email.
-          </p>
-        </div>
-      `,
-    });
-    
-    console.log('Email sent successfully:', data);
-    return data;
-  } catch (error) {
-    console.error('Error sending welcome email:', error);
-    throw error;
-  }
+  return resend.emails.send({
+    from: 'VoxPro <notifications@voxpro.app>',
+    to: email,
+    subject: 'Welcome to VoxPro Waitlist!',
+    html: `
+      <h1>Welcome to VoxPro!</h1>
+      <p>Thank you for joining our waitlist. We're excited to have you on board!</p>
+      <p>We'll keep you updated on our progress and let you know when VoxPro is ready for you.</p>
+      <p>Best regards,<br/>The VoxPro Team</p>
+    `,
+  });
 }
 
 // Send notification to admin
 async function sendAdminNotification(email: string) {
-  try {
-    await resend.emails.send({
-      from: 'VoxPro <notifications@send.voxpro.app>',
-      to: process.env.ADMIN_EMAIL || 'aktivbrain@gmail.com',
-      subject: 'New Waitlist Signup! 📈',
-      html: `
-        <div style="font-family: Arial, sans-serif;">
-          <h2 style="color: #1B365D;">New Waitlist Signup!</h2>
-          <p>A new user has joined the VoxPro waitlist:</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
-        </div>
-      `,
-    });
-  } catch (error) {
-    console.error('Error sending admin notification:', error);
-    // Don't throw the error for admin notifications to avoid affecting the user experience
-  }
+  return resend.emails.send({
+    from: 'VoxPro <notifications@voxpro.app>',
+    to: process.env.ADMIN_EMAIL || 'aktivbrain@gmail.com',
+    subject: 'New Waitlist Signup!',
+    html: `
+      <h1>New Waitlist Signup</h1>
+      <p>A new user has joined the VoxPro waitlist:</p>
+      <p>Email: ${email}</p>
+      <p>Time: ${new Date().toISOString()}</p>
+    `,
+  });
 }
 
 export async function POST(request: Request) {

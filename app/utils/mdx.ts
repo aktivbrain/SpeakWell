@@ -25,7 +25,7 @@ const samplePosts: Post[] = [
     date: '2024-01-19',
     category: 'Pronunciation Tips',
     readTime: '5 min',
-    imageUrl: '/blog/getting-started.jpg',
+    imageUrl: '/blog/getting-started.svg',
     content: `# Getting Started with English Pronunciation\n\nEnglish pronunciation can be challenging...`,
   },
   {
@@ -35,7 +35,7 @@ const samplePosts: Post[] = [
     date: '2024-01-20',
     category: 'Learning Strategies',
     readTime: '4 min',
-    imageUrl: '/blog/common-mistakes.jpg',
+    imageUrl: '/blog/common-mistakes.svg',
     content: `# Common English Pronunciation Mistakes\n\nMany learners struggle with...`,
   },
 ];

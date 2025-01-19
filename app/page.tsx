@@ -1,4 +1,4 @@
-// Force rebuild - {new Date().toISOString()}
+// Force rebuild - {new Date().toISOString()} - Fix blog images and environment variables
 import Navbar from './components/Navbar';
 import Hero from './components/sections/Hero';
 import Features from './components/sections/Features';
