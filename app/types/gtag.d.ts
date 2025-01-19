@@ -1,14 +1,15 @@
+interface GTagEvent {
+  action: string;
+  category: string;
+  label: string;
+  value?: number;
+}
+
 declare global {
   interface Window {
-    gtag: (
-      type: string,
-      measurementId: string,
-      options?: {
-        page_path?: string;
-        event_category?: string;
-        event_label?: string;
-        value?: number;
-      }
-    ) => void;
+    dataLayer: any[];
+    gtag: (...args: any[]) => void;
   }
-} 
+}
+
+export {}; 
