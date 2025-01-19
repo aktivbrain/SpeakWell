@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Image
-              src="/logo.png"
+              src="/logo.svg"
               alt="VoxPro Logo"
               width={40}
               height={40}

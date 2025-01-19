@@ -29,7 +29,7 @@ const Download: React.FC = () => {
           <div className="lg:w-1/2 relative">
             <div className="relative w-full max-w-md mx-auto">
               <Image
-                src="/app-preview.png"
+                src="/app-preview.svg"
                 alt="VoxPro App Preview"
                 width={400}
                 height={800}
