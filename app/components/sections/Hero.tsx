@@ -2,34 +2,93 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-screen bg-gradient-to-b from-[#1B365D] to-[#0F1F35] text-white">
-      <div className="container mx-auto px-4 py-20 flex flex-col items-center justify-center text-center">
-        <Image
-          src="/logo.png"
-          alt="VoxPro Logo"
-          width={120}
-          height={120}
-          className="mb-8"
-        />
-        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-          Master Your Pronunciation with VoxPro
-        </h1>
-        <p className="text-xl md:text-2xl mb-8 text-gray-300 max-w-2xl">
-          Your AI-powered pronunciation coach for perfecting English speech through real-time feedback and personalized practice.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4">
-          <button className="px-8 py-3 bg-[#FF6B6B] hover:bg-[#FF8585] rounded-full font-semibold transition-colors">
-            Download Now
-          </button>
-          <button className="px-8 py-3 border-2 border-white hover:bg-white hover:text-[#1B365D] rounded-full font-semibold transition-colors">
-            Learn More
-          </button>
-        </div>
-      </div>
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#F0F2F5] to-transparent" />
+    <section className="bg-gradient-to-b from-gray-50 to-white">
+      <motion.div
+        className="container mx-auto px-4 py-20 flex flex-col items-center justify-center text-center"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div variants={itemVariants}>
+          <Image
+            src="/logo.svg"
+            alt="VoxPro Logo"
+            width={60}
+            height={60}
+            className="mb-6"
+          />
+        </motion.div>
+
+        <motion.h1
+          variants={itemVariants}
+          className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark"
+        >
+          Master Your Pronunciation with AI
+        </motion.h1>
+
+        <motion.p
+          variants={itemVariants}
+          className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl"
+        >
+          Get real-time feedback on your pronunciation and speak English with confidence.
+        </motion.p>
+
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-wrap gap-4 justify-center"
+        >
+          <motion.a
+            href="#waitlist"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-8 py-3 rounded-full bg-primary text-white font-semibold hover:bg-primary-dark transition-colors"
+          >
+            Join Waitlist
+          </motion.a>
+          <motion.a
+            href="/blog"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-8 py-3 rounded-full border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-colors"
+          >
+            Read Our Blog
+          </motion.a>
+        </motion.div>
+
+        <motion.div
+          variants={itemVariants}
+          className="mt-12 text-sm text-gray-500"
+        >
+          <p>🎯 Personalized feedback</p>
+          <p>🎙️ Advanced speech recognition</p>
+          <p>📱 Available on iOS and Android</p>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

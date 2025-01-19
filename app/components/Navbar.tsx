@@ -15,6 +15,13 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navigation = [
+    { name: 'Features', href: '#features' },
+    { name: 'Pricing', href: '#pricing' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Contact', href: '#contact' },
+  ];
+
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
@@ -48,14 +55,17 @@ const Navbar: React.FC = () => {
             <NavLink href="#faq" isScrolled={isScrolled}>FAQ</NavLink>
           </div>
 
-          {/* Download Button */}
-          <button className={`px-6 py-2 rounded-full font-semibold transition-colors ${
-            isScrolled
-              ? 'bg-[#1B365D] text-white hover:bg-[#2A4A7F]'
-              : 'bg-white text-[#1B365D] hover:bg-gray-100'
-          }`}>
-            Download
-          </button>
+          {/* Join Waitlist Button */}
+          <a 
+            href="#waitlist"
+            className={`px-6 py-2 rounded-full font-semibold transition-colors ${
+              isScrolled
+                ? 'bg-[#1B365D] text-white hover:bg-[#2A4A7F]'
+                : 'bg-white text-[#1B365D] hover:bg-gray-100'
+            }`}
+          >
+            Join Waitlist
+          </a>
         </div>
       </div>
     </nav>

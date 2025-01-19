@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center mb-4">
               <Image
-                src="/logo.png"
+                src="/logo.svg"
                 alt="VoxPro Logo"
                 width={40}
                 height={40}
